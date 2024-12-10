@@ -7,9 +7,12 @@ sources:
       - name: sales
         identifier: raw_gz_sales
         description: sales of Greenweez / we have on row per product_id found in each orders_id
+        loaded_at_field: "CAST(date_date AS TIMESTAMP)"
+        freshness:
+          warn_after: {count: 90, period: day}
         columns:
           - name: date_date
-            descripiton: date of purchase
+            description: date of purchase
           - name: orders_id
             description: order id corresponding with purchase
           - name: products_id
@@ -19,10 +22,10 @@ sources:
           - name: quantity
             description: total items purchased
         tests:
-          - unique
-            column_name: "(orders_id || '-' || pdt_id)"
-          - not_null
-            column_name: "(orders_id || '-' || pdt_id)"
+          - unique:
+              column_name: "(orders_id || '_' || pdt_id)"
+          - not_null:
+              column_name: "(orders_id || '_' || pdt_id)"
       - name: product
         identifier: raw_gz_product
         description: products of Greenweez / purchase price per product
@@ -33,7 +36,7 @@ sources:
               - unique
               - not_null
           - name: purchase_price
-            description: total cost per product 
+            description: total cost per product
       - name: ship
         identifier: raw_gz_ship
         description: Greenweez shipping data / fee paid alongside costs associated with each order
@@ -48,4 +51,4 @@ sources:
           - name: logcost
             description: logistical costs paid by the business
           - name: ship_cost
-            descripiton: shipping costs paid by the business
+            description: shipping costs paid by the business
