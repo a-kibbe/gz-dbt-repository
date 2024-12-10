@@ -52,3 +52,160 @@ sources:
             description: logistical costs paid by the business
           - name: ship_cost
             description: shipping costs paid by the business
+
+
+models:
+  - name: int_sales_margin
+    description: intermediate table showing margin and purchase cost
+    data_tests:
+      - unique:
+          column_name: "(orders_id || '-' || products_id)"
+    columns:
+      - name: date_date
+        description: date of the purchase
+        data_tests:
+          - not_null
+      - name: orders_id
+        description: id of purchase
+        data_tests:
+          - not_null
+      - name: products_id
+        description: id of each product
+        data_tests:
+          - not_null
+      - name: revenue
+        description: income per order
+        data_tests:
+          - not_null
+      - name: quantity
+        description: amount of items ordered
+        data_tests:
+          - not_null
+      - name: purchase_cost
+        description: cost to gz for purchasing products
+        data_tests:
+          - not_null
+      - name: margin
+        description: profit
+        data_tests:
+          - not_null
+  
+  - name: int_orders_margin
+    description: table aggregated by order id and date
+    columns:
+      - name: date_date
+        description: date per order id
+        data_tests:
+          - not_null
+      - name: orders_id
+        description: distinct order ids 
+        data_tests:
+          - unique
+          - not_null
+      - name: revenue
+        description: total revenue per order
+        data_tests:
+          - not_null
+      - name: quantity
+        description: total amount of items in order
+        data_tests:
+          - not_null
+      - name: purchase_cost
+        description: cost to greenweez aggregated by order
+        data_tests:
+          - not_null
+      - name: margin
+        description: profit per order
+        data_tests:
+          - not_null    
+
+
+  - name: int_orders_operational
+    description: added from ship table costs and fees 
+    columns:
+      - name: orders_id
+        description: order id
+        data_tests:
+          - unique
+          - not_null
+      - name: date_date
+        description: date
+        data_tests:
+          - not_null
+      - name: revenue
+        description: income per order
+        data_tests:
+          - not_null        
+      - name: purchase_cost
+        description: cost to company per order
+        data_tests:
+          - not_null
+      - name: operational_margin
+        description: margin after costs
+        data_tests:
+          - not_null
+      - name: quantity
+        description: amount of goods purchased
+        data_tests:
+          - not_null
+      - name: margin
+        description: profit
+        data_tests:
+          - not_null        
+      - name: logcost
+        description: logistical costs
+        data_tests:
+          - not_null
+      - name: ship_cost
+        description: shipping cost
+        data_tests:
+          - not_null
+      - name: shipping_fee
+        description: fee paid by customer
+        data_tests:
+          - not_null
+
+  - name: finance_days
+    description: aggregates of sales data by date
+    columns:
+      - name: date_date
+        description: the date
+        data_tests:
+          - not_null
+          - unique
+      - name: nb_transactions
+        description: sum of order ids on a day
+        data_tests:
+          - not_null     
+      - name: revenue
+        description: revenue for a day
+        data_tests:
+          - not_null
+      - name: average_basket
+        description: average number of items in the basket of an order for a day
+        data_tests:
+          - not_null
+      - name: margin
+        description: profit
+        data_tests:
+          - not_null
+      - name: operational_margin
+        description: the profit margin for a day taking into account COGS and operating costs
+        data_tests:
+          - not_null
+      - name: purchase_cost
+        description: purchase cost for a day (total COGS)
+        data_tests:
+          - not_null
+      - name: shipping_fee
+        description: total cost in shipping fees charged to customers per day
+        data_tests:
+          - not_null
+      - name: logcost
+        description: logistic costs in shipping an order
+        data_tests:
+          - not_null
+      - name: quantity
+        description: total number of items sold in a day
+        data_tests:
+          - not_null
