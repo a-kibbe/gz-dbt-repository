@@ -2,6 +2,8 @@ SELECT
     orders_id
     , date_date
     , ROUND((margin + shipping_fee - logcost - ship_cost),2) operational_margin
+    , quantity
+    , margin
 FROM
 {{ref("int_orders_margin")}} ord_marg
 LEFT JOIN
