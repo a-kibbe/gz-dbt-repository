@@ -20,9 +20,9 @@ sources:
             description: total items purchased
         tests:
           - unique
-            column_name: "(orders_id || '_' || products_id)"
+            column_name: "(orders_id || '_' || pdt_id)"
           - not_null
-            column_name: "(orders_id || '_' || products_id)"
+            column_name: "(orders_id || '_' || pdt_id)"
       - name: product
         identifier: raw_gz_product
         description: products of Greenweez / purchase price per product
