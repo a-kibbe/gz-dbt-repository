@@ -15,4 +15,5 @@ purchase_cost_added as(
 SELECT
     *
     , ROUND((revenue - purchase_cost), 2) as margin
+    , {{ margin_percent( 'revenue', 'purchase_cost') }} AS margin_percent
 FROM purchase_cost_added
