@@ -15,7 +15,7 @@ SELECT
     , ship_cost
 FROM
 {{ ref("finance_days") }}
-LEFT JOIN
+INNER JOIN
 {{ ref("int_campaigns_day") }}
 USING
     (date_date)
